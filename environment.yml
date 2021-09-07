@@ -20,3 +20,4 @@ dependencies:
   - pip:
     - black
     - pre-commit
+    - scipy
