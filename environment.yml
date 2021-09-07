@@ -1,0 +1,22 @@
+name: eda
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - nb_conda
+  - ipykernel
+  - numpy>=1.20.0
+  - matplotlib
+  - pytest
+  - flake8
+  - pycodestyle
+  - isort
+  - mypy
+  - pylint
+  - seaborn
+  - cmaes
+  - jupytext
+  - pip
+  - pip:
+    - black
+    - pre-commit
