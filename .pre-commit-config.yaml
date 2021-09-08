@@ -1,12 +1,6 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-# -   repo: https://github.com/mwouts/jupytext
-#     rev: v1.11.5  # CURRENT_TAG/COMMIT_HASH
-#     hooks:
-#     - id: jupytext
-#       args: [--pre-commit, --from, ipynb, --to, 'py:percent', --pipe, 'mypy {}', --pipe, black, --pipe, 'isort {}']
-#       pass_filenames: false
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
@@ -35,6 +29,18 @@ repos:
     hooks:
     -   id: flake8
         args: [--max-line-length=88, '--ignore=E203,W503,F401,F403']
+-   repo: https://github.com/mwouts/jupytext
+    rev: v1.11.5  # CURRENT_TAG/COMMIT_HASH
+    hooks:
+    -   id: jupytext
+        name: 'jupytext (convert py to ipynb)'
+        args: [--from, py, --to, ipynb, --execute, --update]
+        files: ^notebooks/
+        types: [python]
+        additional_dependencies:
+        -   nbconvert
+        -   ipykernel
+
 # -   repo: local
 #     hooks:
 #     -   id: pytest
