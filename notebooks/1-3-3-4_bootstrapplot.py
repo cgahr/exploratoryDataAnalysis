@@ -23,19 +23,18 @@ def bootstrap_plot(var, n_samples: int = 500):
     fig, ax = plt.subplots(2, 3, sharex=True, sharey="col")
 
     def _plot(data, name, ax0, ax1, value):
-        c05 = np.percentile(data, 5)
-        c95 = np.percentile(data, 95)
+        c025 = np.percentile(data, 2.5)
+        c975 = np.percentile(data, 97.5)
 
         _ = ax0.plot(data, range(n_samples), ".")
-        _ = ax0.vlines(c05, 0, n_samples, "k")
-        _ = ax0.vlines(c95, 0, n_samples, "k")
+        _ = ax0.vlines(c025, 0, n_samples, "k")
+        _ = ax0.vlines(c975, 0, n_samples, "k")
 
         _ = ax1.hist(data, bins=bins)
-        _ = ax1.vlines(c05, 0, n_samples, "k")
-        _ = ax1.vlines(c95, 0, n_samples, "k")
+        _ = ax1.vlines(c025, 0, n_samples, "k")
+        _ = ax1.vlines(c975, 0, n_samples, "k")
 
-        _ = ax0.set_title(f"{name}={value:.3}")
-        _ = ax1.set_xlabel(f"c05={c05:.3}\nc95={c95:.3}")
+        _ = ax0.set_title(f"{name}={value:.3}\n[{c025:.3}, {c975:.3}]")
 
     _plot(mean, "Mean", ax[0][0], ax[1][0], var.mean())
     _plot(median, "Median", ax[0][1], ax[1][1], np.median(var))
