@@ -49,4 +49,4 @@ repos:
 #         language: conda
 #         pass_filenames: false
 #         always_run: true
-fail_fast: false
+fail_fast: true

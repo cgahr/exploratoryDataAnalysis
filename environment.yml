@@ -16,6 +16,7 @@ dependencies:
   - seaborn
   - cmaes
   - jupytext
+  - pandas
   - pip
   - pip:
     - black
