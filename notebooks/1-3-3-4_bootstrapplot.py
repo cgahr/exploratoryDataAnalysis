@@ -20,8 +20,6 @@ def bootstrap_plot(var, n_samples: int = 500):
 
     _, bins = np.histogram(np.concatenate((mean, median, midrange)))
 
-    fig, ax = plt.subplots(2, 3, sharex=True, sharey="col")
-
     def _plot(data, name, ax0, ax1, value):
         c025 = np.percentile(data, 2.5)
         c975 = np.percentile(data, 97.5)
@@ -35,6 +33,8 @@ def bootstrap_plot(var, n_samples: int = 500):
         _ = ax1.vlines(c975, 0, n_samples, "k")
 
         _ = ax0.set_title(f"{name}={value:.3}\n[{c025:.3}, {c975:.3}]")
+
+    fig, ax = plt.subplots(2, 3, sharex=True, sharey="row")
 
     _plot(mean, "Mean", ax[0][0], ax[1][0], var.mean())
     _plot(median, "Median", ax[0][1], ax[1][1], np.median(var))
