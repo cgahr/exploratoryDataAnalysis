@@ -2,8 +2,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import scipy
 import seaborn as sns
+
+from src.plots import plot_autocorrelation
 
 # %%
 sns.set_context("notebook")
@@ -11,46 +12,6 @@ sns.set_style("darkgrid")
 
 plt.rcParams["figure.figsize"] = (6, 4)
 plt.rcParams["figure.dpi"] = 120
-
-# %%
-
-
-def autocorrelation_plot(data, *, lag=None, stem=True, ax=None, **kwargs):
-    n = len(data)
-
-    if ax is None:
-        ax = plt.gca()
-
-    mean = np.mean(data)
-    c0 = np.sum((data - mean) ** 2) / n
-
-    def r(h):
-        return ((data[: n - h] - mean) * (data[h:] - mean)).sum() / n / c0
-
-    z95 = 1.959963984540054
-    z99 = 2.5758293035489004
-    ax.axhline(y=z99 / np.sqrt(n), linestyle="--", color="grey")
-    ax.axhline(y=z95 / np.sqrt(n), color="grey")
-    ax.axhline(y=0.0, color="black")
-    ax.axhline(y=-z95 / np.sqrt(n), color="grey")
-    ax.axhline(y=-z99 / np.sqrt(n), linestyle="--", color="grey")
-
-    if lag is None:
-        x = np.arange(n) + 1
-    else:
-        x = np.arange(lag) + 1
-
-    y = [r(loc) for loc in x]
-
-    if stem:
-        _, _, baseline = ax.stem(x, y, **kwargs)
-        baseline.set_color("none")
-    else:
-        ax.plot(x, y, **kwargs)
-
-    ax.set_xlabel("Lag")
-    ax.set_ylabel("Autocorrelation")
-    # ax.set_ylim((-1.1, 1.1))
 
 
 # %% [markdown]
@@ -72,8 +33,8 @@ def autocorrelation_plot(data, *, lag=None, stem=True, ax=None, **kwargs):
 # %%
 x = np.random.normal(0, 1, 100)
 
-autocorrelation_plot(x)
-plt.gca().set_title(r"$Y \sim \mathcal{N}(0, 1)$")
+plot_autocorrelation(x)
+_ = plt.gca().set_title(r"$Y \sim \mathcal{N}(0, 1)$")
 
 
 # %% [markdown]
@@ -91,8 +52,8 @@ x = pd.read_csv("../datasets/flicker.csv")["y"].values
 
 fig, ax = plt.subplots(1, 2)
 
-autocorrelation_plot(x, stem=False, ax=ax[0])
-autocorrelation_plot(x, stem=True, lag=80, ax=ax[1])
+plot_autocorrelation(x, stem=False, ax=ax[0])
+plot_autocorrelation(x, stem=True, maxlag=80, ax=ax[1])
 fig.suptitle(r"flicker dataset")
 
 plt.tight_layout()
@@ -113,8 +74,8 @@ x = pd.read_csv("../datasets/randomwalk.csv")["y"].values
 
 fig, ax = plt.subplots(1, 2)
 
-autocorrelation_plot(x, stem=False, ax=ax[0])
-autocorrelation_plot(x, stem=True, lag=125, ax=ax[1])
+plot_autocorrelation(x, stem=False, ax=ax[0])
+plot_autocorrelation(x, stem=True, maxlag=125, ax=ax[1])
 fig.suptitle(r"random walk dataset")
 
 plt.tight_layout()
@@ -132,8 +93,8 @@ x = pd.read_csv("../datasets/deflection.csv")["deflection"].values
 
 fig, ax = plt.subplots(1, 2)
 
-autocorrelation_plot(x, stem=False, ax=ax[0])
-autocorrelation_plot(x, lag=50, ax=ax[1])
+plot_autocorrelation(x, stem=False, ax=ax[0])
+plot_autocorrelation(x, maxlag=50, ax=ax[1])
 fig.suptitle(r"sinusoidal model / deflection dataset")
 
 plt.tight_layout()
