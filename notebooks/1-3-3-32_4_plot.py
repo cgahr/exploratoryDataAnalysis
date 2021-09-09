@@ -19,6 +19,8 @@ import numpy as np
 import scipy
 import seaborn as sns
 
+from src.plots import normal_probability_plot
+
 # %%
 sns.set_context("notebook")
 sns.set_style("darkgrid")
@@ -34,18 +36,18 @@ plt.rcParams["figure.dpi"] = 120
 # Basically data per index:
 
 # %%
-x = np.random.normal(0, 1, 100)
+x = np.random.normal(0, 1, 20)
 
-_ = plt.plot(x, ".")
+_ = plt.plot(x)
 _ = plt.title(r"$y \sim \mathcal{N}(0, 1)$")
 _ = plt.xlabel("x")
 _ = plt.ylabel("y")
 
 # %%
-x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+x = np.linspace(0, 1, 20) + np.random.normal(0, 0.1, 20)
 
-_ = plt.plot(x, ".")
-_ = plt.title(r"$y = 0.01x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01)$")
+_ = plt.plot(x)
+_ = plt.title(r"$y = 0.05x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.1)$")
 _ = plt.xlabel("x")
 _ = plt.ylabel("y")
 
@@ -57,7 +59,7 @@ _ = plt.ylabel("y")
 # Shows if data is correlated or not, plot index i vs index i+1
 
 # %%
-x = np.random.normal(0, 1, 100)
+x = np.random.normal(0, 1, 20)
 
 _ = plt.scatter(x[:-1], x[1:])
 _ = plt.title(r"$y \sim \mathcal{N}(0, 1)$")
@@ -65,10 +67,10 @@ _ = plt.xlabel(r"$X_{i-1}$")
 _ = plt.ylabel(r"$X_i$")
 
 # %%
-x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+x = np.linspace(0, 1, 20) + np.random.normal(0, 0.1, 20)
 
 _ = plt.scatter(x[:-1], x[1:])
-_ = plt.title(r"$y = 0.01x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01)$")
+_ = plt.title(r"$y = 0.05x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.1)$")
 _ = plt.xlabel(r"$X_{i-1}$")
 _ = plt.ylabel(r"$X_i$")
 
@@ -78,21 +80,21 @@ _ = plt.ylabel(r"$X_i$")
 # https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm
 
 # %%
-x = np.random.normal(0, 1, 100)
+x = np.random.normal(0, 1, 20)
 
 _ = plt.hist(x)
 _ = plt.title(r"$y \sim \mathcal{N}(0, 1)$")
 _ = plt.ylabel(r"count")
 
 # %%
-x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+x = np.linspace(0, 1, 20) + np.random.normal(0, 0.1, 20)
 
 _ = plt.hist(x)
-_ = plt.title(r"$y = 0.01x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01)$")
+_ = plt.title(r"$y = 0.05x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.1)$")
 _ = plt.ylabel(r"count")
 
 # %% [markdown]
-# # Histogram
+# # Normal Probability Plot
 #
 # https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm
 #
@@ -104,28 +106,18 @@ _ = plt.ylabel(r"count")
 # indicate departures from normality.
 
 # %%
-x = np.random.normal(0, 1, 100)
+x = np.random.normal(0, 1, 20)
+normal_probability_plot(x, alpha=0.05, plot_ci=True)
 
-(osm, osr), (slope, intercept, _) = scipy.stats.probplot(x)
-plt.scatter(osm, osr)
-plt.plot(
-    (osm[0], osm[-1]), (slope * osm[0] + intercept, slope * osm[-1] + intercept), "k--"
-)
-plt.xlabel("theo. quantiles")
-plt.ylabel(r"$Y_i$ (sorted)")
-_ = plt.title(r"$y \sim \mathcal{N}(0, 1)$")
+_ = plt.title(r"$Y \sim \mathcal{N}(0, 1)$")
 
 # %%
-x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+# x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+x = np.random.uniform(0, 1, 20)
+normal_probability_plot(x, alpha=0.05, plot_ci=True)
+_ = plt.title(r"$Y \sim \mathcal{U}(0, 1)$")
 
-(osm, osr), (slope, intercept, _) = scipy.stats.probplot(x)
-plt.scatter(osm, osr)
-plt.plot(
-    (osm[0], osm[-1]), (slope * osm[0] + intercept, slope * osm[-1] + intercept), "k--"
-)
-plt.xlabel("theo. quantiles")
-plt.ylabel(r"$Y_i$ (sorted)")
-_ = plt.title(r"$y = 0.01x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01)$")
+# %%
 
 # %% [markdown]
 # # 4-Plot
@@ -133,7 +125,7 @@ _ = plt.title(r"$y = 0.01x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01
 # https://www.itl.nist.gov/div898/handbook/eda/section3/4plot.htm
 
 # %%
-x = np.random.normal(0, 1, 100)
+x = np.random.normal(0, 1, 20)
 
 fig, ax = plt.subplots(2, 2)
 
@@ -153,19 +145,13 @@ ax_.set_xlabel("Y")
 ax_.set_ylabel("count")
 
 ax_ = ax[1][1]
-(osm, osr), (slope, intercept, _) = scipy.stats.probplot(x)
-ax_.scatter(osm, osr)
-ax_.plot(
-    (osm[0], osm[-1]), (slope * osm[0] + intercept, slope * osm[-1] + intercept), "k--"
-)
-ax_.set_xlabel("theo. quantiles")
-ax_.set_ylabel(r"$Y_i$ (sorted)")
+normal_probability_plot(x, plot_ci=True, alpha=0.05)
 
 fig.suptitle(r"$y \sim \mathcal{N}(0, 1)$")
 plt.tight_layout()
 
 # %%
-x = np.linspace(0, 1, 100) + np.random.normal(0, 0.01, 100)
+x = np.linspace(0, 1, 20) + np.random.normal(0, 0.1, 20)
 
 fig, ax = plt.subplots(2, 2)
 
@@ -185,13 +171,7 @@ ax_.set_xlabel("Y")
 ax_.set_ylabel("count")
 
 ax_ = ax[1][1]
-(osm, osr), (slope, intercept, _) = scipy.stats.probplot(x)
-ax_.scatter(osm, osr)
-ax_.plot(
-    (osm[0], osm[-1]), (slope * osm[0] + intercept, slope * osm[-1] + intercept), "k--"
-)
-ax_.set_xlabel("theo. quantiles")
-ax_.set_ylabel(r"$Y_i$ (sorted)")
+normal_probability_plot(x, plot_ci=True, alpha=0.05)
 
-fig.suptitle(r"$Y = 0.01X + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.01)$")
+fig.suptitle(r"$Y = 0.05X + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.1)$")
 plt.tight_layout()
