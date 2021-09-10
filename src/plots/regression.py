@@ -10,7 +10,7 @@ from src import utils
 from src.utils import get_ax
 
 
-def bootstrap_regression(x: np.ndarray, result: Any, alpha: float):
+def _bootstrap_regression(x: np.ndarray, result: Any, alpha: float):
     ci_scaling = utils.confidence_interval_scaling(alpha, len(x))
     bootstrap_intercept = np.random.normal(
         result.intercept,
@@ -56,7 +56,7 @@ def regression_plot(
     ax.plot(x, y_fit, color="black")
 
     if plot_ci:
-        _lb, _ub = bootstrap_regression(x, regression, alpha)
+        _lb, _ub = _bootstrap_regression(x, regression, alpha)
         ax.plot(x, _lb, "--", color="black")
         ax.plot(x, _ub, "--", color="black")
 
