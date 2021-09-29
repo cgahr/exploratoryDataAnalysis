@@ -3,7 +3,7 @@ import numpy as np
 import scipy
 
 
-def plot_boxcox_nonlinearity(y, *, bounds=(-5.0, 5.0)):
+def boxcox_nonlinearity_plot(y, *, bounds=(-5.0, 5.0)):
     fig, ax = plt.subplots(2, 2, sharey="row")
 
     x = np.arange(y.shape[0]) + 1

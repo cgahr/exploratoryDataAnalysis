@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
+import scipy
 
 
-def plot_autocorrelation(
+def autocorrelation_plot(
     y: npt.ArrayLike,
     *,
     maxlag: int = None,
@@ -25,13 +26,14 @@ def plot_autocorrelation(
     def r(h):
         return ((y[: n - h] - mean) * (y[h:] - mean)).sum() / n / corr0
 
-    z95 = 1.959963984540054
-    z99 = 2.5758293035489004
-    _ = ax.axhline(y=z99 / np.sqrt(n), linestyle="--", color="grey")
-    _ = ax.axhline(y=z95 / np.sqrt(n), color="grey")
+    c95 = np.abs(scipy.stats.t.ppf(0.05 / 2, n - 2))
+    c99 = np.abs(scipy.stats.t.ppf(0.01 / 2, n - 2))
+
+    _ = ax.axhline(y=c99, linestyle="--", color="grey")
+    _ = ax.axhline(y=c95, color="grey")
     _ = ax.axhline(y=0.0, color="black")
-    _ = ax.axhline(y=-z95 / np.sqrt(n), color="grey")
-    _ = ax.axhline(y=-z99 / np.sqrt(n), linestyle="--", color="grey")
+    _ = ax.axhline(y=-c95, color="grey")
+    _ = ax.axhline(y=-c99, linestyle="--", color="grey")
 
     if maxlag is None:
         x = np.arange(n) + 1
