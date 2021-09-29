@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from src.plots import plot_autocorrelation
+from src.plots import autocorrelation_plot
 
 # %%
 sns.set_context("notebook")
@@ -33,7 +33,7 @@ plt.rcParams["figure.dpi"] = 120
 # %%
 x = np.random.normal(0, 1, 100)
 
-plot_autocorrelation(x)
+autocorrelation_plot(x)
 _ = plt.gca().set_title(r"$Y \sim \mathcal{N}(0, 1)$")
 
 
@@ -52,8 +52,8 @@ x = pd.read_csv("../datasets/flicker.csv")["y"].values
 
 fig, ax = plt.subplots(1, 2)
 
-plot_autocorrelation(x, stem=False, ax=ax[0])
-plot_autocorrelation(x, stem=True, maxlag=80, ax=ax[1])
+autocorrelation_plot(x, stem=False, ax=ax[0])
+autocorrelation_plot(x, stem=True, maxlag=80, ax=ax[1])
 fig.suptitle(r"flicker dataset")
 
 plt.tight_layout()
@@ -74,8 +74,8 @@ x = pd.read_csv("../datasets/randomwalk.csv")["y"].values
 
 fig, ax = plt.subplots(1, 2)
 
-plot_autocorrelation(x, stem=False, ax=ax[0])
-plot_autocorrelation(x, stem=True, maxlag=125, ax=ax[1])
+autocorrelation_plot(x, stem=False, ax=ax[0])
+autocorrelation_plot(x, stem=True, maxlag=125, ax=ax[1])
 fig.suptitle(r"random walk dataset")
 
 plt.tight_layout()
@@ -93,8 +93,8 @@ x = pd.read_csv("../datasets/deflection.csv")["deflection"].values
 
 fig, ax = plt.subplots(1, 2)
 
-plot_autocorrelation(x, stem=False, ax=ax[0])
-plot_autocorrelation(x, maxlag=50, ax=ax[1])
+autocorrelation_plot(x, stem=False, ax=ax[0])
+autocorrelation_plot(x, maxlag=50, ax=ax[1])
 fig.suptitle(r"sinusoidal model / deflection dataset")
 
 plt.tight_layout()

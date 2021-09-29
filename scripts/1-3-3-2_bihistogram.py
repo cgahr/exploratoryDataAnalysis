@@ -60,7 +60,7 @@ plt.legend()
 
 
 # %%
-df: pd.DataFrame = pd.read_csv("../datasets/jahnmi2.csv")
+df: pd.DataFrame = pd.read_csv("./datasets/jahnmi2.csv")
 
 batch1 = df.loc[df.Bat == 1, "Y"].values
 batch2 = df.loc[df.Bat == 2, "Y"].values

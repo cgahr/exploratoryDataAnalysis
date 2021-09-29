@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-from src.plots import plot_boxcox_nonlinearity
+from src.plots import boxcox_nonlinearity_plot
 
 # %%
 sns.set_context("notebook")
@@ -33,6 +33,6 @@ plt.rcParams["figure.dpi"] = 120
 y = np.linspace(1, 10, 20) ** 2 + np.random.normal(0, 0.2, 20)
 bounds = (-5, 5)
 
-plot_boxcox_nonlinearity(y, bounds=bounds)
+boxcox_nonlinearity_plot(y, bounds=bounds)
 
 # %%

@@ -1,18 +1,3 @@
-# ---
-# jupyter:
-#   jupytext:
-#     cell_metadata_filter: -all
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.11.5
-#   kernelspec:
-#     display_name: Exploratory Data Analysis
-#     language: python
-#     name: eda
-# ---
-
 # %%
 import matplotlib.pyplot as plt
 import numpy as np
