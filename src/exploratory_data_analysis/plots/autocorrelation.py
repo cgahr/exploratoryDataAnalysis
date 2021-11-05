@@ -3,6 +3,8 @@ import numpy as np
 import numpy.typing as npt
 import scipy
 
+from .. import utils
+
 
 def autocorrelation_plot(
     y: npt.ArrayLike,
@@ -12,8 +14,7 @@ def autocorrelation_plot(
     ax: plt.Axes = None,
     **kwargs
 ):
-    y = np.array(y)
-    assert len(y.shape) == 1
+    y = utils.flatten_or_raise(y)
 
     n = len(y)
 

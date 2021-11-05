@@ -3,11 +3,12 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import numpy.typing as npt
 
-from ..utils import get_ax
+from .. import utils
 
 
 def lag_plot(x: npt.ArrayLike, *, ax: Optional[plt.Axes] = None):
-    ax = get_ax(ax)
+    x = utils.flatten_or_raise(x)
+    ax = utils.get_ax(ax)
 
     _ = ax.scatter(x[:-1], x[1:])
     _ = ax.set_xlabel(r"$X_{i-1}$")

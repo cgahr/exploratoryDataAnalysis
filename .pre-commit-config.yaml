@@ -35,7 +35,7 @@ repos:
     -   id: jupytext
         name: 'jupytext (convert py to ipynb)'
         # args: [--from, py, --to, ipynb, --execute, --update]
-        args: [--sync, --execute, --update]
+        args: [--pre-commit-mode, --sync, --execute, --update]
         files: ^scripts/
         types: [python]
         additional_dependencies:
