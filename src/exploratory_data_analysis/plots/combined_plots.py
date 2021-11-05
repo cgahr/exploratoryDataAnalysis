@@ -2,12 +2,14 @@ import matplotlib.pyplot as plt
 import numpy.typing as npt
 
 from .. import utils
+from ..utils import export
 from .regression import normal_probability_plot
 
 
+@export
 def four_plot(y: npt.ArrayLike):
     y = utils.flatten_or_raise(y)
-    fig, ax = plt.subplots(2, 2)
+    _, ax = plt.subplots(2, 2)
 
     ax_ = ax[0][0]
     ax_.plot(y)

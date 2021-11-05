@@ -4,8 +4,10 @@ import numpy.typing as npt
 import scipy
 
 from .. import utils
+from ..utils import export
 
 
+@export
 def boxcox_nonlinearity_plot(
     y: npt.ArrayLike, *, bounds: tuple[float, float] = (-5.0, 5.0)
 ):

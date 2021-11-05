@@ -7,6 +7,7 @@ import numpy.typing as npt
 import scipy
 
 from .. import utils
+from ..utils import export
 
 
 def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
@@ -29,6 +30,7 @@ def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
     )
 
 
+@export
 def regression_plot(
     x: npt.ArrayLike,
     y: Optional[npt.ArrayLike] = None,
@@ -71,6 +73,7 @@ def regression_plot(
     return namedtuple("regression", ret)(**ret)
 
 
+@export
 def normal_probability_plot(
     y: npt.ArrayLike,
     *,

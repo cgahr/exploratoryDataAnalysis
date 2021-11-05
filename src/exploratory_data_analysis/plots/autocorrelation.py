@@ -6,8 +6,10 @@ import numpy.typing as npt
 import scipy
 
 from .. import utils
+from ..utils import export
 
 
+@export
 def autocorrelation_plot(
     y: npt.ArrayLike,
     *,

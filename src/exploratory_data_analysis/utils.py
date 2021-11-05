@@ -1,4 +1,5 @@
-from typing import Any, Optional
+import sys
+from typing import Any, Callable, Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,3 +23,12 @@ def flatten_or_raise(x: npt.ArrayLike) -> npt.NDArray[Any]:
         return x.flatten()
 
     raise ValueError("The input 'x' cannot be flattened to 1 dim array.")
+
+
+def export(fun: Callable[..., Any]):
+    mod = sys.modules[fun.__module__]
+    if hasattr(mod, "__all__"):
+        mod.__all__.append(fun.__name__)  # type: ignore
+    else:
+        mod.__all__ = [fun.__name__]  # type: ignore
+    return fun
