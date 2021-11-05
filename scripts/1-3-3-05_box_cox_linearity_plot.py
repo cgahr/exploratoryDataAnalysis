@@ -12,7 +12,7 @@ sns.set_style("darkgrid")
 plt.rcParams["figure.figsize"] = (6, 4)
 plt.rcParams["figure.dpi"] = 120
 
-np.random.seed(12)
+# np.random.seed(42)
 
 
 # %% [markdown]
