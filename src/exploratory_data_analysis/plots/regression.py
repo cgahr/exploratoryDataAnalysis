@@ -9,7 +9,7 @@ import scipy
 from .. import utils
 
 
-def _bootstrap_regression(x: np.ndarray, result: Any, alpha: float):
+def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
     ci_scaling = utils.confidence_interval_scaling(alpha, len(x))
     bootstrap_intercept = np.random.normal(
         result.intercept,
@@ -38,24 +38,24 @@ def regression_plot(
     ax: Optional[plt.Axes] = None,
 ):
     if y is None:
-        y = utils.flatten_or_raise(x)
-        x = np.arange(len(y))
+        _y = utils.flatten_or_raise(x)
+        _x = np.arange(len(_y))
     else:
-        x = utils.flatten_or_raise(x)
-        y = utils.flatten_or_raise(y)
+        _x = utils.flatten_or_raise(x)
+        _y = utils.flatten_or_raise(y)
 
-    regression = scipy.stats.linregress(x, y)
+    regression = scipy.stats.linregress(_x, _y)
 
-    y_fit = regression.slope * x + regression.intercept
+    y_fit = regression.slope * _x + regression.intercept
 
-    ci_scaling = utils.confidence_interval_scaling(alpha, len(x))
+    ci_scaling = utils.confidence_interval_scaling(alpha, len(_x))
 
     ax = utils.get_ax(ax)
-    ax.scatter(x, y)
-    ax.plot(x, y_fit, color="black")
+    ax.scatter(_x, _y)
+    ax.plot(_x, y_fit, color="black")
 
     if plot_ci:
-        _lb, _ub = _bootstrap_regression(x, regression, alpha)
+        _lb, _ub = _bootstrap_regression(_x, regression, alpha)
         ax.plot(x, _lb, "--", color="black")
         ax.plot(x, _ub, "--", color="black")
 

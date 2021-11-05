@@ -1,3 +1,5 @@
+from typing import Optional
+
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
@@ -9,7 +11,7 @@ from .. import utils
 def autocorrelation_plot(
     y: npt.ArrayLike,
     *,
-    maxlag: int = None,
+    maxlag: Optional[int] = None,
     stem: bool = True,
     ax: plt.Axes = None,
     **kwargs
@@ -24,7 +26,7 @@ def autocorrelation_plot(
     mean = np.mean(y)
     corr0 = np.sum((y - mean) ** 2) / n
 
-    def r(h):
+    def r(h, y):
         return ((y[: n - h] - mean) * (y[h:] - mean)).sum() / n / corr0
 
     c95 = np.abs(scipy.stats.t.ppf(0.05 / 2, n - 2))
@@ -41,7 +43,7 @@ def autocorrelation_plot(
     else:
         x = np.arange(maxlag) + 1
 
-    y = [r(loc) for loc in x]
+    y = [r(loc, y) for loc in x]
 
     if stem:
         _, _, baseline = ax.stem(x, y, **kwargs)

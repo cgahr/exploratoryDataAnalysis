@@ -1,10 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 import scipy
 
+from .. import utils
 
-def boxcox_nonlinearity_plot(y, *, bounds=(-5.0, 5.0)):
-    fig, ax = plt.subplots(2, 2, sharey="row")
+
+def boxcox_nonlinearity_plot(
+    y: npt.ArrayLike, *, bounds: tuple[float, float] = (-5.0, 5.0)
+):
+    y = utils.flatten_or_raise(y)
+
+    _, ax = plt.subplots(2, 2, sharey="row")
 
     x = np.arange(y.shape[0]) + 1
     slope, intercept = np.polyfit(x, y, deg=1)
