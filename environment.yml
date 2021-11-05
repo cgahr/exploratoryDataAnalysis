@@ -3,9 +3,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - nb_conda
-  - ipykernel
   - numpy>=1.20.0
+  - scipy
   - matplotlib
   - pytest
   - flake8
@@ -13,12 +12,14 @@ dependencies:
   - isort
   - mypy
   - pylint
-  - seaborn
-  - cmaes
   - jupytext
-  - pandas
   - pip
   - pip:
     - black
     - pre-commit
     - scipy
+    - pytest-mock
+    - pytest-env
+    - pytest-cov
+    - pytest-console-scripts
+    - coverage
