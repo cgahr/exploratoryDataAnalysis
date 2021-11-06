@@ -1,4 +1,4 @@
-name: CI Lint
+name: Build
 
 on:
   push:
@@ -36,3 +36,8 @@ jobs:
       with:
         name: code-coverage-report
         path: htmlcov
+    - name: Create notebooks from scripts
+      run: jupytext notebooks/*.py --execute --sync
+    - name: Commit changes made by Jupytext
+      uses: stefanzweifel/git-auto-commit-action@v4
+      commit_message: Jupytext add automatically created notebooks
