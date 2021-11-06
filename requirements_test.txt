@@ -4,9 +4,11 @@ flake8
 flake8-bandit
 flake8-bugbear
 flake8-comprehensions
+ipykernel
 isort
 jupytext
 mypy
+nbconvert
 pytest
 pytest-console-scripts
 pytest-cov
