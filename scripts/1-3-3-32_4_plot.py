@@ -1,7 +1,6 @@
 # %%
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
 import seaborn as sns
 
 from exploratory_data_analysis.plots import four_plot, lag_plot, normal_probability_plot
