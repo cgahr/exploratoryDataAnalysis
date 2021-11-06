@@ -1,0 +1,2 @@
+class TooLargeSampleWarning(Warning):
+    pass

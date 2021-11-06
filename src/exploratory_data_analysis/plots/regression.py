@@ -13,14 +13,10 @@ from ..utils import export
 def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
     ci_scaling = utils.confidence_interval_scaling(alpha, len(x))
     bootstrap_intercept = np.random.normal(
-        result.intercept,
-        ci_scaling * result.intercept_stderr,
-        (len(x), len(x)),
+        result.intercept, ci_scaling * result.intercept_stderr, (len(x), len(x))
     )
     bootstrap_slope = np.random.normal(
-        result.slope,
-        ci_scaling * result.stderr,
-        (len(x), len(x)),
+        result.slope, ci_scaling * result.stderr, (len(x), len(x))
     )
     bootstrap = bootstrap_slope * np.tile(x, (len(x), 1)).T + bootstrap_intercept
 
