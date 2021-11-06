@@ -3,11 +3,9 @@ name: CI Lint
 on:
   push:
     branches:
-      - master
       - main
   pull_request:
     branches:
-      - master
       - main
 jobs:
   build:
@@ -29,8 +27,6 @@ jobs:
       run: isort src --check
     - name: Flake8 code checker
       run: flake8 src
-    - name: Pycodestyle code checker
-      run: pycodestyle src
     - name: Mypy code formatter
       run: mypy src
     - name: Pytest test code
