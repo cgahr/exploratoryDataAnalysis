@@ -1,0 +1,12 @@
+pytest
+flake8
+pycodestyle
+isort
+mypy
+jupytext
+black
+pytest-mock
+pytest-env
+pytest-cov
+pytest-console-scripts
+coverage

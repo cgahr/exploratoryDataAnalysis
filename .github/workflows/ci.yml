@@ -19,19 +19,19 @@ jobs:
       with:
         python-version: 3.9
     - name: Install dependencies
-      run: $CONDA/bin/conda env update
+      run: pip install --upgrade pip && pip install -r requirements_test.txt
     - name: Black code formatter
-      run: $CONDA/bin/black src --check
+      run: black src --check
     - name: Isort sort imports
-      run: $CONDA/bin/isort src --check
+      run: isort src --check
     - name: Flake8 code checker
-      run: $CONDA/bin/flake8 src
+      run: flake8 src
     - name: Pycodestyle code checker
-      run: $CONDA/bin/pycodestyle src
+      run: pycodestyle src
     - name: Mypy code formatter
-      run: $CONDA/bin/mypy src
+      run: mypy src
     - name: Pytest test code
-      run: $CONDA/bin/pytest
+      run: pytest
     - name: Archive pytest coverage report
       uses: actions/upload-artifact@v2
       with:
