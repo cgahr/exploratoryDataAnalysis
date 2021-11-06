@@ -15,10 +15,14 @@ dependencies:
   - pip
   - pip:
     - black
-    - pre-commit
-    - scipy
-    - pytest-mock
-    - pytest-env
-    - pytest-cov
-    - pytest-console-scripts
     - coverage
+    - flake8
+    - flake8-bandit
+    - flake8-bugbear
+    - flake8-comprehensions
+    - pre-commit
+    - pytest-console-scripts
+    - pytest-cov
+    - pytest-env
+    - pytest-mock
+    - scipy
