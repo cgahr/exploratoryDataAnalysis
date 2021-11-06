@@ -5,15 +5,14 @@ import numpy as np
 import numpy.typing as npt
 from matplotlib.pyplot import Axes
 
-from .. import utils
+from .._utils import export, flatten_or_raise
 from ..exceptions import TooLargeSampleWarning
-from ..utils import export
-from .regression import normal_probability_plot
+from ._regression import normal_probability_plot
 
 
 @export
 def four_plot(y: npt.ArrayLike):
-    y = utils.flatten_or_raise(y)
+    y = flatten_or_raise(y)
     _, ax = plt.subplots(2, 2)
 
     ax_ = ax[0][0]
@@ -39,7 +38,7 @@ def four_plot(y: npt.ArrayLike):
 
 @export
 def bootstrap_plot(x: npt.ArrayLike, n_samples: Optional[int] = None):
-    x = utils.flatten_or_raise(x)
+    x = flatten_or_raise(x)
 
     if n_samples is None:
         n_samples = len(x)

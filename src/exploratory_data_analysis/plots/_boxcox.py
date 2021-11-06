@@ -3,15 +3,14 @@ import numpy as np
 import numpy.typing as npt
 import scipy
 
-from .. import utils
-from ..utils import export
+from .._utils import export, flatten_or_raise
 
 
 @export
 def boxcox_nonlinearity_plot(
     y: npt.ArrayLike, *, bounds: tuple[float, float] = (-5.0, 5.0)
 ):
-    y = utils.flatten_or_raise(y)
+    y = flatten_or_raise(y)
 
     _, ax = plt.subplots(2, 2, sharey="row")
 

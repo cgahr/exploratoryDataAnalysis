@@ -5,8 +5,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy
 
-from .. import utils
-from ..utils import export
+from .._utils import export, flatten_or_raise
 
 
 @export
@@ -18,7 +17,7 @@ def autocorrelation_plot(
     ax: plt.Axes = None,
     **kwargs
 ):
-    y = utils.flatten_or_raise(y)
+    y = flatten_or_raise(y)
 
     n = len(y)
 

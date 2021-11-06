@@ -6,12 +6,12 @@ import numpy as np
 import numpy.typing as npt
 import scipy
 
-from .. import utils
-from ..utils import export
+from .. import _utils
+from .._utils import export
 
 
 def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
-    ci_scaling = utils.confidence_interval_scaling(alpha, len(x))
+    ci_scaling = _utils.confidence_interval_scaling(alpha, len(x))
     bootstrap_intercept = np.random.normal(
         result.intercept, ci_scaling * result.intercept_stderr, (len(x), len(x))
     )
@@ -36,19 +36,19 @@ def regression_plot(
     ax: Optional[plt.Axes] = None,
 ):
     if y is None:
-        _y = utils.flatten_or_raise(x)
+        _y = _utils.flatten_or_raise(x)
         _x = np.arange(len(_y))
     else:
-        _x = utils.flatten_or_raise(x)
-        _y = utils.flatten_or_raise(y)
+        _x = _utils.flatten_or_raise(x)
+        _y = _utils.flatten_or_raise(y)
 
     regression = scipy.stats.linregress(_x, _y)
 
     y_fit = regression.slope * _x + regression.intercept
 
-    ci_scaling = utils.confidence_interval_scaling(alpha, len(_x))
+    ci_scaling = _utils.confidence_interval_scaling(alpha, len(_x))
 
-    ax = utils.get_ax(ax)
+    ax = _utils.get_ax(ax)
     ax.scatter(_x, _y)
     ax.plot(_x, y_fit, color="black")
 
@@ -77,11 +77,11 @@ def normal_probability_plot(
     alpha: float = 0.05,
     ax: Optional[plt.Axes] = None,
 ):
-    y = utils.flatten_or_raise(y)
+    y = _utils.flatten_or_raise(y)
 
     osm, osr = scipy.stats.probplot(y, fit=False)
 
-    ax = utils.get_ax(ax)
+    ax = _utils.get_ax(ax)
 
     slope, intercept, slope_err, intercept_err = regression_plot(
         osm, osr, plot_ci=plot_ci, alpha=alpha, ax=ax

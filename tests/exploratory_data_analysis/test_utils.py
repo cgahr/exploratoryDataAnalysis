@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from exploratory_data_analysis.utils import flatten_or_raise
+from exploratory_data_analysis._utils import flatten_or_raise
 
 
 class TestFlattenOrRaise:
