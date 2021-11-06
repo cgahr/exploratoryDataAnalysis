@@ -9,7 +9,7 @@ setuptools.setup(
     packages=setuptools.find_packages(where="src"),
     package_dir={"": "src"},
     python_requires=">=3.9",
-    install_requires=["numpy", "matplotlib"],
+    install_requires=["numpy", "matplotlib", "seaborn", "scipy"],
     setup_requires=["pytest-runner"],
     test_suite="pytest",
     tests_require=["pytest"],
