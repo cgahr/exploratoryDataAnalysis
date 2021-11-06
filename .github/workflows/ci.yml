@@ -1,0 +1,39 @@
+name: CI Lint
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: $CONDA/bin/conda env update
+    - name: Black code formatter
+      run: $CONDA/bin/black src --check
+    - name: Isort sort imports
+      run: $CONDA/bin/isort src --check
+    - name: Flake8 code checker
+      run: $CONDA/bin/flake8 src
+    - name: Pycodestyle code checker
+      run: $CONDA/bin/pycodestyle src
+    - name: Mypy code formatter
+      run: $CONDA/bin/mypy src
+    - name: Pytest test code
+      run: $CONDA/bin/pytest
+    - name: Archive pytest coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: src/htmlcov
