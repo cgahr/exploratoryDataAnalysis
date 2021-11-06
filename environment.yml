@@ -8,7 +8,6 @@ dependencies:
   - matplotlib
   - pytest
   - flake8
-  - pycodestyle
   - isort
   - mypy
   - pylint
