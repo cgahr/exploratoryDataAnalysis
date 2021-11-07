@@ -10,6 +10,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+from scipy.stats import kurtosis, skew
 
 import exploratory_data_analysis as eda
 
@@ -220,9 +221,7 @@ _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
 
 # %%
 eda.plot.bootstrap_plot(
-    uniform_500,
-    [np.std, lambda x: np.std(x, ddof=1), lambda x: np.std(x, ddof=2)],
-    ["Std", "Std, ddof=1", "Std, ddof=2"],
+    uniform_500, [np.var, skew, kurtosis], ["Variance", "Skewness", "Kurtosis"]
 )
 _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
 
@@ -232,8 +231,6 @@ _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
 
 # %%
 eda.plot.bootstrap_plot(
-    normal_500,
-    [np.std, lambda x: np.std(x, ddof=1), lambda x: np.std(x, ddof=2)],
-    ["Std", "Std, ddof=1", "Std, ddof=2"],
+    normal_500, [np.var, skew, kurtosis], ["Variance", "Skewness", "Kurtosis"]
 )
 _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
