@@ -1,3 +1,3 @@
-from . import plots
+from . import plot
 
 # __all__ = ("plots",)

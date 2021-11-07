@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-from exploratory_data_analysis.plots import boxcox_nonlinearity_plot
+from exploratory_data_analysis.plot import boxcox_nonlinearity_plot
 
 # %%
 sns.set_context("notebook")

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from exploratory_data_analysis.plots import autocorrelation_plot
+from exploratory_data_analysis.plot import autocorrelation_plot
 
 # %%
 sns.set_context("notebook")

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +6,6 @@ import numpy.typing as npt
 from matplotlib.pyplot import Axes
 
 from .._utils import export, flatten_or_raise
-from ..exceptions import TooLargeSampleWarning
 from ._regression import normal_probability_plot
 
 
@@ -19,37 +18,26 @@ def four_plot(y: npt.ArrayLike):
     ax_.plot(y)
     ax_.set_xlabel(r"Index")
     ax_.set_ylabel(r"$Y_i$")
-    ax_.set_title("Lineplot")
 
     ax_ = ax[0][1]
     ax_.scatter(y[:-1], y[1:])
     ax_.set_xlabel(r"$Y_{i-1}$")
     ax_.set_ylabel(r"$Y_i$")
-    ax_.set_title("Lag Plot")
 
     ax_ = ax[1][0]
     ax_.hist(y)
     ax_.set_xlabel("Y")
     ax_.set_ylabel("count")
-    ax_.set_title("Histogram")
 
     ax_ = ax[1][1]
     normal_probability_plot(y, plot_ci=False, alpha=0.05)
-    ax_.set_title("Normal Probability Plot")
 
     plt.tight_layout()
 
 
 @export
-def bootstrap_plot(x: npt.ArrayLike, n_samples: Optional[int] = None):
+def bootstrap_mmm_plot(x: npt.ArrayLike, n_samples: int = 500):
     x = flatten_or_raise(x)
-
-    if n_samples is None:
-        n_samples = len(x)
-    elif n_samples > len(x):
-        raise TooLargeSampleWarning(
-            "'n_samples' is larger then the number of elements in x."
-        )
 
     sample = np.random.choice(x, (n_samples, x.shape[0]))
 
