@@ -58,7 +58,7 @@ def bootstrap_plot(
         _ = ax0.vlines(c025, 0, n_samples, "k")
         _ = ax0.vlines(c975, 0, n_samples, "k")
 
-        _ = ax1.hist(stats[idx], bins=bins, density=True)
+        _ = ax1.hist(stats[idx], bins=bins)
         _ = ax1.vlines(c025, 0, n_samples, "k")
         _ = ax1.vlines(c975, 0, n_samples, "k")
 
@@ -66,7 +66,7 @@ def bootstrap_plot(
         _ = ax0.set_title(f"{names[idx]}={value:.3}\n[{c025:.3}, {c975:.3}]")
 
     _ = axes[0][0].set_ylabel("Subsample")
-    _ = axes[1][0].set_ylabel("Density")
+    _ = axes[1][0].set_ylabel("Count")
 
     fig.suptitle("Bootstrap Plot")
 

@@ -220,7 +220,9 @@ _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
 
 # %%
 eda.plot.bootstrap_plot(
-    uniform_500, [min, max, np.std], ["Min", "Max", "Standard Deviation"]
+    uniform_500,
+    [np.std, lambda x: np.std(x, ddof=1), lambda x: np.std(x, ddof=2)],
+    ["Std", "Std, ddof=1", "Std, ddof=2"],
 )
 _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
 
@@ -230,6 +232,8 @@ _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
 
 # %%
 eda.plot.bootstrap_plot(
-    normal_500, [min, max, np.std], ["Min", "Max", "Standard Deviation"]
+    normal_500,
+    [np.std, lambda x: np.std(x, ddof=1), lambda x: np.std(x, ddof=2)],
+    ["Std", "Std, ddof=1", "Std, ddof=2"],
 )
 _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
