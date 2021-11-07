@@ -1,9 +1,8 @@
-from typing import Any
+from typing import Any, Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
-from matplotlib.pyplot import Axes
 
 from .._utils import export, flatten_or_raise
 from ._regression import normal_probability_plot
@@ -36,44 +35,50 @@ def four_plot(y: npt.ArrayLike):
 
 
 @export
-def bootstrap_mmm_plot(x: npt.ArrayLike, n_samples: int = 500):
+def bootstrap_plot(
+    x: npt.ArrayLike,
+    funs: list[Callable[[npt.NDArray[Any]], float]],
+    names: list[str],
+    n_samples: int = 500,
+    alpha: float = 0.05,
+):
     x = flatten_or_raise(x)
 
-    sample = np.random.choice(x, (n_samples, x.shape[0]))
+    sample = np.random.choice(x, (n_samples, len(x)))
+    stats = [np.apply_along_axis(fun, 1, sample) for fun in funs]
 
-    mean = sample.mean(axis=1)
-    median = np.median(sample, axis=1)
-    midrange = 0.5 * (sample.max(axis=1) + sample.min(axis=1))
+    _, bins = np.histogram(np.concatenate(stats))
+    fig, axes = plt.subplots(2, len(stats), sharex=True, sharey="row")
 
-    _, bins = np.histogram(np.concatenate((mean, median, midrange)))
+    for idx, (ax0, ax1) in enumerate(zip(axes[0], axes[1])):
+        c025 = np.percentile(stats[idx], 100 * (alpha / 2))
+        c975 = np.percentile(stats[idx], 100 * (1 - alpha / 2))
 
-    def _plot(
-        y: npt.NDArray[Any], n: int, name: str, ax0: Axes, ax1: Axes, value: float
-    ):
-        c025 = np.percentile(y, 2.5)
-        c975 = np.percentile(y, 97.5)
+        _ = ax0.plot(stats[idx], range(n_samples), ".")
+        _ = ax0.vlines(c025, 0, n_samples, "k")
+        _ = ax0.vlines(c975, 0, n_samples, "k")
 
-        _ = ax0.plot(y, range(n), ".")
-        _ = ax0.vlines(c025, 0, n, "k")
-        _ = ax0.vlines(c975, 0, n, "k")
+        _ = ax1.hist(stats[idx], bins=bins, density=True)
+        _ = ax1.vlines(c025, 0, n_samples, "k")
+        _ = ax1.vlines(c975, 0, n_samples, "k")
 
-        _ = ax1.hist(y, bins=bins)
-        _ = ax1.vlines(c025, 0, n, "k")
-        _ = ax1.vlines(c975, 0, n, "k")
+        value = funs[idx](x)
+        _ = ax0.set_title(f"{names[idx]}={value:.3}\n[{c025:.3}, {c975:.3}]")
 
-        _ = ax0.set_title(f"{name}={value:.3}\n[{c025:.3}, {c975:.3}]")
-
-    fig, ax = plt.subplots(2, 3, sharex=True, sharey="row")
-
-    _plot(mean, n_samples, "Mean", ax[0][0], ax[1][0], x.mean())
-    _plot(median, n_samples, "Median", ax[0][1], ax[1][1], np.median(x))
-    _plot(
-        midrange, n_samples, "Midrange", ax[0][2], ax[1][2], 0.5 * (x.min() + x.max())
-    )
-
-    _ = ax[0][0].set_ylabel("Subsample")
-    _ = ax[1][0].set_ylabel("Count")
+    _ = axes[0][0].set_ylabel("Subsample")
+    _ = axes[1][0].set_ylabel("Density")
 
     fig.suptitle("Bootstrap Plot")
 
     plt.tight_layout()
+
+
+@export
+def bootstrap_mmm_plot(x: npt.ArrayLike, n_samples: int = 500, alpha: float = 0.05):
+    bootstrap_plot(
+        x,
+        [np.mean, np.median, lambda x: (x.max() - x.min()) / 2],
+        ["Mean", "Median", "Midrange"],
+        n_samples=n_samples,
+        alpha=alpha,
+    )

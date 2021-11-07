@@ -27,33 +27,6 @@ normal_500 = np.random.normal(0, 1, 500)
 normal = np.random.normal(0, 1, 20)
 linear = np.linspace(0, 1, 20) + np.random.normal(0, 0.05, 20)
 
-
-# %% [markdown]
-# ## Bootstrap Plot
-#
-# > The bootstrap (Efron and Gong) plot is used to estimate the uncertainty of a
-# > statistic.
-# >
-# -- <cite> [Engineering Statistics Handbook, Bootstrap Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/eda334.htm) </cite>
-#
-# The function `eda.plot.bootstrap_mmm_plot' bootstraps the mean, median and midrange of a dataset.
-
-# %% [markdown]
-# ### Bootstrap Mean, Median and Midrange of Uniform Data
-#
-
-# %%
-eda.plot.bootstrap_mmm_plot(uniform_500)
-_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
-
-# %% [markdown]
-# ### Bootstrap Plot Normal Data
-#
-
-# %%
-eda.plot.bootstrap_mmm_plot(normal_500)
-_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
-
 # %% [markdown]
 # ## Run Sequence Plot
 #
@@ -68,7 +41,7 @@ _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
 # > With run sequence plots, shifts in location and scale are typically quite evident.
 # > Also, outliers can easily be detected.
 # >
-# -- <cite> [Engineering Statistics Handbook, Run-Squence Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/runseqpl.htm) </cite>
+# -- [Engineering Statistics Handbook, Run-Squence Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/runseqpl.htm)
 #
 # Basically, the run sequence plot plots data vs index.
 
@@ -97,7 +70,7 @@ _ = plt.ylabel("y")
 # > should not exhibit any identifiable structure in the lag plot. Non-random structure
 # > in the lag plot indicates that the underlying data are not random.
 # >
-# -- <cite> [Engineering Statistics Handbook, Lag Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/lagplot.htm) </cite>
+# -- [Engineering Statistics Handbook, Lag Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/lagplot.htm)
 
 # %% [markdown]
 # ### Lag Plot Normal Data
@@ -126,7 +99,7 @@ _ = plt.title(r"$y = 0.05x + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.05
 # > 1. presence of outliers; and
 # > 1. presence of multiple modes in the data.
 # >
-# -- <cite> [Engineering Statistics Handbook, Histogram](https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm) </cite>
+# -- [Engineering Statistics Handbook, Histogram](https://www.itl.nist.gov/div898/handbook/eda/section3/histogra.htm)
 #
 
 # %% [markdown]
@@ -155,7 +128,7 @@ _ = plt.ylabel(r"count")
 # > the points should form an approximate straight line. Departures from this straight
 # > line indicate departures from normality.
 # >
-# -- <cite> [Engineering Statistics Handbook, Normal Probability Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm) </cite>
+# -- [Engineering Statistics Handbook, Normal Probability Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/normprpl.htm)
 #
 # In addition, for a given significance level $\alpha$, the plot can show the confidence
 # interval of the fitted normal distribution.
@@ -198,7 +171,7 @@ _ = plt.title(r"$Y \sim \mathcal{U}(0, 1)$")
 # > still the same. The 4-plot can and should be routinely applied to the residuals when
 # > fitting models regardless of whether the model is simple or complicated.
 # >
-# -- <cite> [Engineering Statistics Handbook, 4-Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/4plot.htm) </cite>
+# -- [Engineering Statistics Handbook, 4-Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/4plot.htm)
 #
 # %% [markdown]
 # ### 4-Plot Normal Data
@@ -214,3 +187,49 @@ plt.tight_layout()
 eda.plot.four_plot(linear)
 plt.suptitle(r"$Y = 0.05X + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.05)$")
 plt.tight_layout()
+
+# %% [markdown]
+# ## Bootstrap Plot
+#
+# > The bootstrap (Efron and Gong) plot is used to estimate the uncertainty of a
+# > statistic.
+# >
+# -- [Engineering Statistics Handbook, Bootstrap Plot](https://www.itl.nist.gov/div898/handbook/eda/section3/eda334.htm)
+#
+# The function `eda.plot.bootstrap_mmm_plot' bootstraps the mean, median and midrange of a dataset.
+
+# %% [markdown]
+# ### Bootstrap Mean, Median and Midrange of Uniform Data
+#
+
+# %%
+eda.plot.bootstrap_mmm_plot(uniform_500)
+_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
+
+# %% [markdown]
+# ### Bootstrap Mean, Median and Midrange of Normal Data
+#
+
+# %%
+eda.plot.bootstrap_mmm_plot(normal_500)
+_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
+
+# %% [markdown]
+# ### Bootstrap Mean, Median and Midrange of Uniform Data
+#
+
+# %%
+eda.plot.bootstrap_plot(
+    uniform_500, [min, max, np.std], ["Min", "Max", "Standard Deviation"]
+)
+_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
+
+# %% [markdown]
+# ### Bootstrap Mean, Median and Midrange of Normal Data
+#
+
+# %%
+eda.plot.bootstrap_plot(
+    normal_500, [min, max, np.std], ["Min", "Max", "Standard Deviation"]
+)
+_ = plt.suptitle(r"Bootstrap $X \sim \mathcal{N}(0, 1)$")
