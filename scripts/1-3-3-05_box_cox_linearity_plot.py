@@ -36,5 +36,3 @@ y = np.linspace(1, 10, 20) ** 2 + np.random.normal(0, 0.2, 20)
 bounds = (-5, 5)
 
 boxcox_nonlinearity_plot(y, bounds=bounds)
-
-# %%

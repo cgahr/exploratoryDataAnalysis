@@ -10,15 +10,16 @@ from .. import _utils
 from .._utils import export
 
 
-def _bootstrap_regression(x: npt.NDArray[Any], result: Any, alpha: float):
-    ci_scaling = _utils.confidence_interval_scaling(alpha, len(x))
+def _bootstrap_regression(x: npt.ArrayLike, result: Any, alpha: float):
+    x = _utils.flatten_or_raise(x)
+    ci_scaling = _utils.confidence_interval_scaling(alpha, 500)
     bootstrap_intercept = np.random.normal(
-        result.intercept, ci_scaling * result.intercept_stderr, (len(x), len(x))
+        result.intercept, ci_scaling * result.intercept_stderr, (len(x), 500)
     )
     bootstrap_slope = np.random.normal(
-        result.slope, ci_scaling * result.stderr, (len(x), len(x))
+        result.slope, ci_scaling * result.stderr, (len(x), 500)
     )
-    bootstrap = bootstrap_slope * np.tile(x, (len(x), 1)).T + bootstrap_intercept
+    bootstrap = bootstrap_slope * np.tile(x, (500, 1)).T + bootstrap_intercept
 
     return (
         np.percentile(bootstrap, alpha * 50, axis=1),
@@ -86,8 +87,12 @@ def normal_probability_plot(
     slope, intercept, slope_err, intercept_err = regression_plot(
         osm, osr, plot_ci=plot_ci, alpha=alpha, ax=ax
     )
-    ax.set_xlabel(
-        fr"$\mathcal{{N}}({intercept:.3f} \pm {intercept_err:0.3f}, "
-        + fr"{slope:.3f} \pm {slope_err:.3f})$"
-    )
+    if plot_ci:
+        ax.set_xlabel(
+            fr"$\mathcal{{N}}({intercept:.3f} \pm {intercept_err:0.3f}, "
+            + fr"{slope:.3f} \pm {slope_err:.3f})$"
+        )
+    else:
+        ax.set_xlabel(fr"$\mathcal{{N}}({intercept:.3f}, {slope:.3f})$")
+
     ax.set_ylabel(r"$Y$")

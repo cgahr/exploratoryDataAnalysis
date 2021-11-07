@@ -33,11 +33,11 @@ def autocorrelation_plot(
     c95 = np.abs(scipy.stats.t.ppf(0.05 / 2, n - 2))
     c99 = np.abs(scipy.stats.t.ppf(0.01 / 2, n - 2))
 
-    _ = ax.axhline(y=c99, linestyle="--", color="grey")
-    _ = ax.axhline(y=c95, color="grey")
+    _ = ax.axhline(y=c99, linestyle="--", color="black")
+    _ = ax.axhline(y=c95, color="black")
     _ = ax.axhline(y=0.0, color="black")
-    _ = ax.axhline(y=-c95, color="grey")
-    _ = ax.axhline(y=-c99, linestyle="--", color="grey")
+    _ = ax.axhline(y=-c95, color="black")
+    _ = ax.axhline(y=-c99, linestyle="--", color="black")
 
     if maxlag is None:
         x = np.arange(n) + 1
