@@ -2,6 +2,7 @@ import seaborn as _sns
 
 from . import _config
 from ._autocorrelation import *
+from ._batch_plots import *
 from ._boxcox import *
 from ._combined_plots import *
 from ._regression import *

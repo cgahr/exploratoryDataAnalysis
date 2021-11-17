@@ -184,6 +184,7 @@ plt.tight_layout()
 
 # %% [markdown]
 # ### 4-Plot Linear Data
+
 # %%
 eda.plot.four_plot(linear)
 plt.suptitle(r"$Y = 0.05X + \varepsilon$, $\varepsilon \sim \mathcal{N}(0, 0.05)$")
@@ -200,7 +201,7 @@ plt.tight_layout()
 # The function `eda.plot.bootstrap_mmm_plot' bootstraps the mean, median and midrange of a dataset.
 
 # %% [markdown]
-# ### Bootstrap Mean, Median and Midrange of Uniform Data
+# ### Bootstrap Variance, Skewness and Kurtosis of Uniform Data
 #
 
 # %%
@@ -208,7 +209,7 @@ eda.plot.bootstrap_mmm_plot(uniform_500)
 _ = plt.suptitle(r"Bootstrap $X \sim \mathcal{U}(0, 1)$")
 
 # %% [markdown]
-# ### Bootstrap Mean, Median and Midrange of Normal Data
+# ### Bootstrap Variance, Skewness and Kurtosis of Normal Data
 #
 
 # %%

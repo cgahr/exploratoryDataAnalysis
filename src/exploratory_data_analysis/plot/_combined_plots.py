@@ -51,19 +51,19 @@ def bootstrap_plot(
     fig, axes = plt.subplots(2, len(stats), sharex=True, sharey="row")
 
     for idx, (ax0, ax1) in enumerate(zip(axes[0], axes[1])):
-        c025 = np.percentile(stats[idx], 100 * (alpha / 2))
-        c975 = np.percentile(stats[idx], 100 * (1 - alpha / 2))
+        c_lb = np.percentile(stats[idx], 100 * (alpha / 2))
+        c_ub = np.percentile(stats[idx], 100 * (1 - alpha / 2))
 
         _ = ax0.plot(stats[idx], range(n_samples), ".")
-        _ = ax0.vlines(c025, 0, n_samples, "k")
-        _ = ax0.vlines(c975, 0, n_samples, "k")
+        _ = ax0.axvline(x=c_lb, color="black")
+        _ = ax0.axvline(x=c_ub, color="black")
 
         _ = ax1.hist(stats[idx], bins=bins)
-        _ = ax1.vlines(c025, 0, n_samples, "k")
-        _ = ax1.vlines(c975, 0, n_samples, "k")
+        _ = ax1.axvline(x=c_lb, color="black")
+        _ = ax1.axvline(x=c_ub, color="black")
 
         value = funs[idx](x)
-        _ = ax0.set_title(f"{names[idx]}={value:.3}\n[{c025:.3}, {c975:.3}]")
+        _ = ax0.set_title(f"{names[idx]}={value:.3}\n[{c_lb:.3}, {c_ub:.3}]")
 
     _ = axes[0][0].set_ylabel("Subsample")
     _ = axes[1][0].set_ylabel("Count")
